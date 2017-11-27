@@ -1,4 +1,4 @@
-console.log('spotifyKeys are loaded');
+// console.log('spotifyKeys are loaded');
 
 var spotifyKeys = {
   id: 'cf1b75e58acf4d5497c8e47566d18570',

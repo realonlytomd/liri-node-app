@@ -17,6 +17,7 @@ var request = require("request");
 // initialize variables generic for all 4 actions
 var action = process.argv[2];
 var userInput = process.argv[3];
+// console.log(userInput);
 
 switch (action) {
   case "my-tweets":
@@ -66,24 +67,40 @@ function tweets() {
 // the "spotify-this" function.  accesses the Spotify API.
 
 function spotifynow() {
+	
+	//console.log(userInput);
 
-	spotify.search({ type: "artist", query: userInput, limit: 1 }, function(err, data) {
+	spotify.search({ type: "track", query: userInput, limit: 1 }, function(err, data) {
 		
 		if (err) {
 		return console.log('Error occurred: ' + err);
 		}
- 
-		console.log(data);
+
+		// Get the required info:
+		// Artist(s)
+     	// The album that the song is from
+     	// The song's name
+     	// A preview link of the song from Spotify
+
+		console.log("The artist is: " + data.tracks.items[0].album.artists[0].name);
+		console.log("The song is on the album: " + data.tracks.items[0].album.name);
+		console.log("The song is: " + data.tracks.items[0].name);
+		console.log("Here is a preview: " + data.tracks.items[0].preview_url);
 	});
 }
 
 // the "movie-this" function.  accesses the OMDB API.
 function movie() {
 
-	movieName = userInput;
-	//console.log(movieName);
+	var movieName = userInput;
 
-	//if the movie has more than a one word in the title, need to concatenate a plus sign
+	if (movieName === undefined) {
+		movieName = "Mr. Nobody";
+	}
+
+	// console.log(movieName);
+
+	// if the movie has more than a one word in the title, need to concatenate a plus sign
 	// inbetween the words
 
 	for (var i = 4; i < process.argv.length; i++) {
@@ -96,7 +113,7 @@ function movie() {
 	// build the queryurl with the properly formatted movie name
 	var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=40e9cece";
 
-	//console.log(queryUrl);
+	// console.log(queryUrl);
 
 	// then perform the request to the omdb api
 
@@ -106,9 +123,9 @@ function movie() {
 		if (!error && response.statusCode === 200) {
 
 			// Parse the body (the data from the site)
-			// Use the JSON.parse to make it into JSON and log that to the console.
+			// Use the JSON.parse to make it into JSON
    			var answer = JSON.parse(body);
-			console.log(answer);
+			// console.log(answer);
 
 			// then get the data required
 
