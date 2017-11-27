@@ -12,29 +12,32 @@ var spotify = new Spotify(spotifyKeyInfo);
 var fs = require("fs");
 var request = require("request");
 
-//console.log(process.argv);
+console.log(process.argv);
 
 // initialize variables generic for all 4 actions
 var action = process.argv[2];
 var userInput = process.argv[3];
+
 // console.log(userInput);
+function overAgain() {
 
-switch (action) {
-  case "my-tweets":
-    tweets();
-    break;
+	switch (action) {
+		case "my-tweets":
+		tweets();
+		break;
 
-  case "spotify-this-song":
-    spotifynow();
-    break;
+	case "spotify-this-song":
+		spotifynow();
+		break;
 
-  case "movie-this":
-    movie();
-    break;
+	case "movie-this":
+		movie();
+		break;
 
-  case "do-what-it-says":
-    dowhat();
-    break;
+	case "do-what-it-says":
+		dowhat();
+		break;
+	}
 }
 
 // the "my-tweets" function.  accesses the twitter API
@@ -141,7 +144,7 @@ function movie() {
 			console.log("The movie's title is: " + answer.Title);
 			console.log("The movie was released in: " + answer.Year);
 			console.log("The movie's IMDB rating is: " + answer.imdbRating);
-			console.log("The movie's " + answer.Ratings[1].Source + " rating is: " + 
+			console.log("The movie's Rotten Tomatoes rating is: " + 
 				answer.Ratings[1].Value);
 			console.log("The movie was produced in: " + answer.Country);
 			console.log("The movie is in the language of : " + answer.Language);
@@ -152,3 +155,39 @@ function movie() {
 	});
 
 }
+
+function dowhat() {
+
+	// read the random.txt file
+
+	fs.readFile("./random.txt", "utf8", function(error, randomTodo) {
+
+		if (error) {
+			return console.log(error);
+		}
+
+		// split the string by the comma, to make an array
+		var randomArr = randomTodo.split(",");
+
+		//console.log(randomTodo);
+		//console.log(randomArr);
+
+		// Assign the data from this array to the action and userInput
+		// variables.  This has to be done here (inside the fs function)
+		// because fs is asynchronous
+
+		action = randomArr[0];
+		userInput = randomArr[1];
+
+		// call the original function to take the newly assigned variable into
+		// their proper functions
+		overAgain();
+
+	});
+	
+}
+
+// This is the original call to the function that calls the
+// tweets, spotify, or movie functions.
+
+overAgain();
