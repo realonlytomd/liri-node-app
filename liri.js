@@ -73,7 +73,7 @@ function spotifynow() {
 	
 	//console.log(userInput);
 
-	spotify.search({ type: "track", query: userInput, limit: 3 }, function(err, data) {
+	spotify.search({ type: "track", query: userInput, limit: 1 }, function(err, data) {
 		
 		if (err) {
 		return console.log('Error occurred: ' + err);
@@ -140,7 +140,7 @@ function movie() {
 			// Language of the movie.
 			// Plot of the movie.
 			// Actors in the movie.
-			
+
 			console.log("The movie's title is: " + answer.Title);
 			console.log("The movie was released in: " + answer.Year);
 			console.log("The movie's IMDB rating is: " + answer.imdbRating);
