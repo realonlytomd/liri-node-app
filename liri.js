@@ -12,7 +12,7 @@ var spotify = new Spotify(spotifyKeyInfo);
 var fs = require("fs");
 var request = require("request");
 
-console.log(process.argv);
+// console.log(process.argv);
 
 // initialize variables generic for all 4 actions
 var action = process.argv[2];
@@ -55,7 +55,7 @@ function tweets() {
 
 	client.get("statuses/user_timeline", params, function(error, tweets, response) {
   		if (!error) {
-    	//console.log(tweets);
+    	console.log(tweets);
 
     	// log all 20 dates and tweets
     	for (var i = 0; i < count; i++) {
@@ -73,7 +73,7 @@ function spotifynow() {
 	
 	//console.log(userInput);
 
-	spotify.search({ type: "track", query: userInput, limit: 1 }, function(err, data) {
+	spotify.search({ type: "track", query: userInput, limit: 3 }, function(err, data) {
 		
 		if (err) {
 		return console.log('Error occurred: ' + err);
@@ -140,12 +140,14 @@ function movie() {
 			// Language of the movie.
 			// Plot of the movie.
 			// Actors in the movie.
-
+			
 			console.log("The movie's title is: " + answer.Title);
 			console.log("The movie was released in: " + answer.Year);
 			console.log("The movie's IMDB rating is: " + answer.imdbRating);
-			console.log("The movie's Rotten Tomatoes rating is: " + 
+			if (answer.Ratings[1] != undefined) {
+				console.log("The movie's Rotten Tomatoes rating is: " + 
 				answer.Ratings[1].Value);
+			}
 			console.log("The movie was produced in: " + answer.Country);
 			console.log("The movie is in the language of : " + answer.Language);
 			console.log("The plot of the movie is: " + answer.Plot);
