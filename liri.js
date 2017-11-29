@@ -55,12 +55,12 @@ function tweets() {
 
 	client.get("statuses/user_timeline", params, function(error, tweets, response) {
   		if (!error) {
-    	console.log(tweets);
+    	// console.log(tweets);
 
     	// log all 20 dates and tweets
     	for (var i = 0; i < count; i++) {
-    		console.log(tweets[i].created_at);
-    		console.log(tweets[i].text);
+    		console.log("\nDate: " + tweets[i].created_at);
+    		console.log("The tweet: " + tweets[i].text);
     	}
 		}
 	});
