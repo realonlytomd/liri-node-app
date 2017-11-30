@@ -66,7 +66,7 @@ function tweets() {
     		console.log("\nDate: " + tweets[i].created_at);
     		console.log("The tweet: " + tweets[i].text);
     		result[i] = tweets[i].created_at + "\n" + tweets[i].text;
-    		logresults();
+    		logresults(result[i]);
     	}
 		}
 	});
@@ -90,11 +90,18 @@ function spotifynow() {
      	// The album that the song is from
      	// The song's name
      	// A preview link of the song from Spotify
+     	var name = data.tracks.items[0].album.artists[0].name;
+     	var album = data.tracks.items[0].album.name;
+     	var song = data.tracks.items[0].name;
+     	var preview = data.tracks.items[0].preview_url
 
-		console.log("The artist is: " + data.tracks.items[0].album.artists[0].name);
-		console.log("The song is on the album: " + data.tracks.items[0].album.name);
-		console.log("The song is: " + data.tracks.items[0].name);
-		console.log("Here is a preview: " + data.tracks.items[0].preview_url);
+		console.log("The artist is: " + name);
+		console.log("The song is on the album: " + album);
+		console.log("The song is: " + song);
+		console.log("Here is a preview: " + preview);
+		
+		var result =[name + ", " + album + ", " + song + ", " + preview];
+		logresults(result);
 	});
 }
 
@@ -209,9 +216,9 @@ function logaction() {
   });
 }
 
-function logresults() {
+function logresults(data) {
 
-	fs.appendFile("log.txt", "\r\nAnswer: " + result[i], function(err) {
+	fs.appendFile("log.txt", "\r\nAnswer: " + data, function(err) {
 		if (err) {
 			return console.log(err);
 		}

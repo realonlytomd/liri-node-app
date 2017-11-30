@@ -73,6 +73,30 @@ function spotifynow() {
 	
 	//console.log(userInput);
 
+	if (userInput === undefined) {
+		userInput = "Ace of Base";
+
+		spotify.search({ type: "artist", query: userInput, limit: 1 }, function(err, data) {
+		
+			if (err) {
+			return console.log('Error occurred: ' + err);
+			}
+
+			// Get the required info:
+			// Artist(s)
+     		// The album that the song is from
+     		// The song's name
+     		// A preview link of the song from Spotify
+     		//console.log(data.artists);
+			console.log("The artist is: " + data.artists.items[0].name);
+			console.log("The song is on the album: " + data.artists.items[0].album.name);
+			console.log("The song is: " + data.artists.items[0].name);
+			console.log("Here is a preview: " + data.artists.items[0].preview_url);
+		});
+	}
+
+
+
 	spotify.search({ type: "track", query: userInput, limit: 1 }, function(err, data) {
 		
 		if (err) {
@@ -84,7 +108,7 @@ function spotifynow() {
      	// The album that the song is from
      	// The song's name
      	// A preview link of the song from Spotify
-
+     	
 		console.log("The artist is: " + data.tracks.items[0].album.artists[0].name);
 		console.log("The song is on the album: " + data.tracks.items[0].album.name);
 		console.log("The song is: " + data.tracks.items[0].name);
